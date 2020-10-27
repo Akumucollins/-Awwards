@@ -16,7 +16,7 @@
                 <div class="col-md-9 mt-3">
                     <div class="profile-user-settings d-flex">
                         <h1 class="profile-user-name text-uppercase pt-3 font-weight-bold"
-                            style="font-family: 'Grand Hotel', cursive;color: white;font-size:25px;">{{ user.username }}
+                            style="font-family: 'Grand Hotel', cursive;font-size:28px;">{{ user.username }}
                         </h1>&nbsp;&nbsp;
                         <button class="btn profile-edit-btn" data-toggle="modal" data-target="#profile">Edit
                             Profile</button>
@@ -25,16 +25,21 @@
                     </div>
                     <div class="profile-stats pt-3">
                         <div class="d-flex">
-                            <p class="text-uppercase font-weight-bold"><span
-                                    class="profile-stat-count text-white">25</span> posts</p>
-                            <p class="text-uppercase font-weight-bold"><span
-                                    class="profile-stat-count ml-3 text-white">2534</span> followers</p>
-                            <p class="text-uppercase font-weight-bold"><span
-                                    class="profile-stat-count ml-3 text-white">123</span> following</p>
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                  <span class="font-weight-bold">{{project|length}}</span> Project
+                                </li>
+                                <li class="list-inline-item">
+                                  <span class="font-weight-bold">{{profile.user.follow.all | length}}</span> Ratings
+                                </li>
+                                <li class="list-inline-item">
+                                  <span class="font-weight-bold">{{profile.user.current_user.all | length}}</span> Projects rated
+                                </li>
+                              </ul>
                         </div>
                     </div>
                     <div class="profile-bio">
-                        <p><span class="profile-real-name text-white text-uppercase font-weight-bold">{{ user.username }}
+                        <p class="blue-text" style="opacity: 0.9;"><span class="profile-real-name text-dark text-uppercase font-weight-bold" style="font-family: 'Grand Hotel', cursive;">{{ user.username }}
                                 bio&nbsp;:&nbsp;</span>
                             {% if user.profile.bio %}
                             {{ user.profile.bio }}
@@ -55,50 +60,29 @@
                         <i class="fa fa-user ml-5">&nbsp;&nbsp; TAGGED</i>
                     </div>
                     <br>
-                    <!-- <main>
-                        <div class="container">
-                            <div class="gallery text-center">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <i class="fa fa-bookmark ml-5 text-white">&nbsp;&nbsp;SAVED IMAGES</i>
-                                        {% for image in images %}
-                                        <div class="gallery-item" tabindex="0">
-                                            <img src="{{image.image.url}}" class="gallery-image"
-                                                alt="{{image.caption}}">
-                                            <div class="gallery-item-info">
-                                                <ul>
-                                                    <li class="gallery-item-likes"><i class="fa fa-heart"
-                                                            aria-hidden="true"></i> 56</li>
-                                                    <li class="gallery-item-comments"></span><i class="fa fa-comment"
-                                                            aria-hidden="true"></i> 2</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        {% endfor %}
+                    <main>
+                        <div class="container text-center">
+                            <i class="fa fa-th-large blue-text ">&nbsp;&nbsp;My Projects</i>
+                            <div class="row">
+                                {% for project in projects %}
+                                <div class="card-columns">
+                                    <div class="card border-secondary">
+                                        <img class="card-img-top" class="img-responsive"
+                                            src="{{project.project_image.url}}" alt="{{project.project_title}}" 
+                                            style="max-height: 598.02px; max-width: 598.02px;">
                                     </div>
-                                    <div class="col-md-6">
-                                        <i class="fa fa-th-large text-white">&nbsp;&nbsp;MY POSTS</i>
-                                        {% for post in posts %}
-                                        <div class="gallery-item" tabindex="0">
-                                            <div class="card float-left mt-3 card-custom">
-                                                <div class="card-body d-flex justify-content-center">
-                                                    <a href="{% url 'post-detail' post.pk%}">
-                                                        <h3 class="card-title"><span
-                                                                class="badge badge-info">{{ post.image_name }}</span>
-                                                        </h3>
-                                                        <img src="{{ post.image.url }}" class="card-img-top img-fluid"
-                                                            alt="{{post.image}}"
-                                                            style="max-height: 598.02px; max-width: 598.02px;">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {% endfor %}
+                                    {% empty %}
+                                    <div class="col-md-12">
+                                        <h2>Profile has no projects</h2>
                                     </div>
+                                    {% endfor %}
                                 </div>
                             </div>
+                            {% if profile.user == user %}
+                            <p><a href="{% url 'project' %}">Submit Project</a></p>
+                            {% endif %}
                         </div>
-                    </main> -->
+                    </main>
                 </div>
             </div>
         </div>
@@ -118,9 +102,9 @@
                     <div class="media">
                         <img class="rounded-circle account-img" width="100" height="100"
                             src="{{ user.profile.image.url }}">
-                        <div class="media-body">
-                            <h2 class="account-heading">{{ user.username }}</h2>
-                            <p class="text-secondary">{{ user.email }}</p>
+                        <div class="media-body pl-2 mt-3">
+                            <h2 class="account-heading" style="font-family: 'Grand Hotel', cursive;">{{ user.username }}</h2>
+                            <p class="text-primary">{{ user.email }}</p>
                         </div>
                     </div>
                     <form method="POST" enctype="multipart/form-data">
