@@ -101,7 +101,7 @@ def project(request):
                 form = ProjectForm(request.POST,request.FILES)
                 if form.is_valid():
                     project = form.save(commit=False)
-                    project.posted_by = current_user
+                    project.author = current_user
                     project.profile = profile
                     project.save()
                     return redirect('home')
